@@ -44,4 +44,10 @@
     <!-- Recognizing fingerprint animation -->
     <dimen name="udfps_animation_size">270dp</dimen>
     <dimen name="udfps_animation_offset">38dp</dimen>
+
+    <!-- Microns per pixel for the 6.57" 1080x2400 panel (~401 ppi).
+         SystemUI sizes the under-display fingerprint icon from this value; the
+         upstream default is -1, which makes the icon padding negative/large and
+         renders a clipped, incorrectly scaled fingerprint on the lock screen. -->
+    <item name="pixel_pitch" format="float" type="dimen">63.4</item>
 </resources>

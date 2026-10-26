@@ -15,7 +15,8 @@ BUILD_BROKEN_DUP_RULES := true
 TARGET_SCREEN_DENSITY := 440
 
 # Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):init_xiaomi_vangogh
+# Migrated: TARGET_INIT_VENDOR_LIB → soong_config_set (lineage-23 deprecation)
+$(call soong_config_set,libinit,vendor_init_lib,//$(DEVICE_PATH):init_xiaomi_vangogh)
 TARGET_RECOVERY_DEVICE_MODULES := init_xiaomi_vangogh
 
 # Properties

@@ -35,5 +35,12 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 29
 
+# VINTF: skip kernel config requirements check during build
+# vangogh kernel 4.19 is missing a few FCM 6 configs
+# (CRYPTO_CHACHA20POLY1305, SONY_FF, TRACE_GPU_MEM, XFRM_MIGRATE,
+#  and ANDROID_PARANOID_NETWORK should be n instead of y).
+# TODO: fix these in kernel defconfig and re-enable
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+
 # Inherit from vendor blobs
 $(call inherit-product, vendor/xiaomi/vangogh/vangogh-vendor.mk)

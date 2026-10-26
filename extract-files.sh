@@ -40,6 +40,19 @@ function blob_fixup() {
             # 18 10 90 e5  # ldr        r1,[r0,#0x18]
             # 00 f0 20 e3  # nop
             sed -i 's|\x18\x10\x90\xe5\x58\xb0\x01\xeb|\x18\x10\x90\xe5\x00\xf0\x20\xe3|g' "${2}"
+
+            # Fix libaudioroute ABI mismatch: Android 16 libaudioroute.so changed
+            # struct mixer_state layout (union -> struct with byte_size field).
+            # Redirect to libaudioroute-v34.so (old ABI compat shim from hardware/lineage/compat).
+            patchelf --replace-needed libaudioroute.so libaudioroute-v34.so "${2}"
+            ;;
+        vendor/lib64/hw/audio.primary.lito.so)
+            # Fix libaudioroute ABI mismatch (see vendor/lib/hw/audio.primary.lito.so above)
+            patchelf --replace-needed libaudioroute.so libaudioroute-v34.so "${2}"
+            ;;
+        vendor/lib/libaudioroute_ext.so|vendor/lib64/libaudioroute_ext.so)
+            # Fix libaudioroute ABI mismatch (see vendor/lib/hw/audio.primary.lito.so above)
+            patchelf --replace-needed libaudioroute.so libaudioroute-v34.so "${2}"
             ;;
         vendor/lib64/vendor.qti.hardware.camera.postproc@1.0-service-impl.so)
             hexdump -ve '1/1 "%.2X"' "${2}" | sed "s/210080529A0A0094/210080521F2003D5/g" | xxd -r -p > "${TMPDIR}/${1##*/}"
