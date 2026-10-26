@@ -34,3 +34,9 @@ mka bacon
 ```
 
 See README.md for the device specification.
+
+## Status / known issues
+
+See the common tree `ADAPTATION.md` for the full list. In short: the 4.19 /
+Android 16 build boots and is usable; the OTA is test-key signed; recovery adb
+is authenticated by default; the 5.10 kernel port is experimental and separate.
